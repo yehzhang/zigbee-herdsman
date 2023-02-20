@@ -221,6 +221,9 @@ class Group extends Entity {
             );
             await Entity.adapter.sendZclFrameToGroup(this.groupID, frame, options.srcEndpoint);
         } catch (error) {
+            if (!(error instanceof Error)) {
+                error = new Error(error)
+            }
             error.message = `${log} failed (${error.message})`;
             debug.error(error.message);
             throw error;
